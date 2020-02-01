@@ -40,11 +40,9 @@ function mapStateToProps(state) {
   };
 }
 
-function mapDispatchToprops(dispatch) {
-  return {
-    booksLoaded: (newBooks) => dispatch(booksLoaded(newBooks))
-  };
-}
+const mapDispatchToprops = {
+  booksLoaded
+};
 
 export default withBookstoreService()(
   connect(mapStateToProps, mapDispatchToprops)(BookList)
