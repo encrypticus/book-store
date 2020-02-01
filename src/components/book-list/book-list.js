@@ -3,6 +3,7 @@ import BookListItem from '$c/book-list-item';
 import {connect} from 'react-redux';
 import {withBookstoreService} from '../hoc';
 import {booksLoaded} from '$actions';
+import {compose} from '$utils';
 
 import styles from './book-list.scss';
 
@@ -44,6 +45,7 @@ const mapDispatchToprops = {
   booksLoaded
 };
 
-export default withBookstoreService()(
-  connect(mapStateToProps, mapDispatchToprops)(BookList)
-);
+export default compose(
+  withBookstoreService(),
+  connect(mapStateToProps, mapDispatchToprops)
+)(BookList);
