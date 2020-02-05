@@ -1,7 +1,10 @@
 // Объект настроек по умолчанию
 const defaultOptions = {
   sourceMap: true,
-  modules: true
+  modules: {
+    mode: 'local',
+    localIdentName:'[local]'
+  }
 };
 
 /**

@@ -9,7 +9,10 @@ const defaultOptions = {
   styleLoader: {},
   cssLoader: {
     sourceMap: true,
-    modules: true
+    modules: {
+      mode: 'local',
+      localIdentName: '[local]'
+    }
   },
   sassScssLoader: {
     sourceMap: true

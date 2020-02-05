@@ -6,12 +6,12 @@ const ErrorIndicator = () => {
   return (
     <div className={styles["error-indicator"]}>
       <img className={styles["error-indicator__img"]} src={url} alt="error"/>
-      <span className={styles["error-indicator__boom"]}>BOOM</span>
+      <span className={styles["error-indicator__boom"]}>OOOPS!!!</span>
       <span>
         something has gone terribly wrong
       </span>
       <span>
-        (but we already sent droids to fix it)
+        (but we already sent guys to fix it)
       </span>
     </div>
   );

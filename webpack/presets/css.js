@@ -8,7 +8,10 @@ const defaultOptions = {
   styleLoader: {},
   cssLoader: {
     sourceMap: true,
-    modules: true
+    modules: {
+      mode: 'local',
+      localIdentName: '[local]'
+    }
   },
   postcssLoader: {
     config: {
