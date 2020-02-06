@@ -1,9 +1,9 @@
 import React from 'react';
-import BookList from '$c/book-list';
+import BookListContainer from '../containers/book-list-container';
 
 const HomePage = () => {
   return (
-    <BookList/>
+    <BookListContainer/>
   );
 };
 
