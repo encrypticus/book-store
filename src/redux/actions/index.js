@@ -1,18 +1,34 @@
 const booksLoaded = (newBooks) => ({
-  type: 'BOOKS_LOADED',
+  type: 'FETCH_BOOKS_SUCCESS',
   payload: newBooks,
 });
 
 const booksRequested = () => ({
-  type: 'BOOKS_REQUESTED'
+  type: 'FETCH_BOOKS_REQUEST'
 });
 
 const hasError = () => ({
-  type: 'HAS_ERROR'
+  type: 'FETCH_BOOKS_FAILURE'
 });
 
+const bookAddedToCart = (bookId) => {
+  return {
+    type: 'BOOK_ADDED_TO_CART',
+    payload: bookId
+  };
+};
+
+const fetchBooks = (dispatch, bookstoreService) => () => {
+  dispatch(booksRequested());
+
+  bookstoreService.getToken().then((token) => {
+    bookstoreService.getBooks(`https://redux-app-91c13.firebaseio.com/data.json?auth=${token}`)
+      .then(data => dispatch(booksLoaded(data)))
+      .catch(error => dispatch(hasError()));
+  });
+};
+
 export {
-  booksLoaded,
-  booksRequested,
-  hasError
+  fetchBooks,
+  bookAddedToCart
 };

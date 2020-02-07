@@ -4,7 +4,7 @@ import BookListItem from '$c/book-list-item';
 import './book-list.scss';
 
 const BookList = (props) => {
-  const { books } = props;
+  const { books, onAddedToCart } = props;
 
   return (
     <ul className="book-list">
@@ -12,7 +12,10 @@ const BookList = (props) => {
         books.map((book) => {
           return (
             <li key={book.id}>
-              <BookListItem book={book}/>
+              <BookListItem
+                book={book}
+                onAddedToCart={() => onAddedToCart(book.id)}
+              />
             </li>
           );
         })
