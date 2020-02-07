@@ -79,18 +79,10 @@ const mapStateToProps = (state) => {
   }
 };
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    onIncrease: (id) => {
-      dispatch(bookAddedToCart(id))
-    },
-    onDecrease: (id) => {
-      dispatch(subtractItem(id))
-    },
-    onDelete: (id) => {
-      dispatch(bookDeletedFromCart(id))
-    }
-  };
+const mapDispatchToProps = {
+  onIncrease: bookAddedToCart,
+  onDecrease: subtractItem,
+  onDelete: bookDeletedFromCart
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ShoppingCartTable);
