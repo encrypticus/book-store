@@ -7,6 +7,10 @@ const initialState = {
 };
 
 const reducer = (state = initialState, action) => {
+  const bookId = action.payload;
+  const book = state.books.find((book) => book.id === bookId);
+  const index = state.cartItems.findIndex(item => item.id === bookId);
+
   switch (action.type) {
 
     case 'FETCH_BOOKS_REQUEST':
@@ -33,11 +37,7 @@ const reducer = (state = initialState, action) => {
       };
 
     case 'BOOK_ADDED_TO_CART':
-      const bookId = action.payload;
-      const book = state.books.find((book) => book.id === bookId);
-      const item = state.cartItems.findIndex(item => item.id === bookId);
-
-      if (item < 0) {
+      if (index < 0) {
         const newItem = {
           id: book.id,
           name: book.title,
@@ -55,14 +55,14 @@ const reducer = (state = initialState, action) => {
       } else {
         let clonedCartItems = [...state.cartItems];
 
-        clonedCartItems[item] = {
-          ...clonedCartItems[item],
-          count: clonedCartItems[item].count + 1
+        clonedCartItems[index] = {
+          ...clonedCartItems[index],
+          count: clonedCartItems[index].count + 1
         };
 
-        clonedCartItems[item] = {
-          ...clonedCartItems[item],
-          total: clonedCartItems[item].count * book.price
+        clonedCartItems[index] = {
+          ...clonedCartItems[index],
+          total: clonedCartItems[index].count * book.price
         };
 
         return {
@@ -70,6 +70,33 @@ const reducer = (state = initialState, action) => {
           cartItems: clonedCartItems
         };
       }
+
+    case 'SUBTRACT_ITEM':
+      let clonedCartItems = [...state.cartItems];
+
+      clonedCartItems[index] = {
+        ...clonedCartItems[index],
+        count: clonedCartItems[index].count <= 1 ? 1 : clonedCartItems[index].count - 1
+      };
+
+      clonedCartItems[index] = {
+        ...clonedCartItems[index],
+        total: clonedCartItems[index].count * book.price
+      };
+
+      return {
+        ...state,
+        cartItems: clonedCartItems
+      };
+
+    case 'BOOK_DELETED_FROM_CART':
+      const cartItems = [...state.cartItems];
+      cartItems.splice(index, 1);
+
+      return {
+        ...state,
+        cartItems
+      };
 
     default:
       return state;
