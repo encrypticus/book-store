@@ -35,16 +35,27 @@ const reducer = (state = initialState, action) => {
     case 'BOOK_ADDED_TO_CART':
       const bookId = action.payload;
       const book = state.books.find((book) => book.id === bookId);
-      const item = state.cartItems.findIndex(item => item.id === bookId);
+      const itemIndex = state.cartItems.findIndex(item => item.id === bookId);
+      const item = state.cartItems[itemIndex];
 
-      if (item < 0) {
-        const newItem = {
+      let newItem;
+
+      if (item) {
+        newItem = {
+          ...item,
+          count: item.count + 1,
+          total: item.total + book.price
+        }
+      } else {
+        newItem = {
           id: book.id,
-          name: book.title,
+          title: book.title,
           count: 1,
           total: book.price
         };
+      }
 
+      if (itemIndex < 0) {
         return {
           ...state,
           cartItems: [
@@ -53,23 +64,16 @@ const reducer = (state = initialState, action) => {
           ]
         };
       } else {
-        let clonedCartItems = [...state.cartItems];
-
-        clonedCartItems[item] = {
-          ...clonedCartItems[item],
-          count: clonedCartItems[item].count + 1
-        };
-
-        clonedCartItems[item] = {
-          ...clonedCartItems[item],
-          total: clonedCartItems[item].count * book.price
-        };
-
         return {
           ...state,
-          cartItems: clonedCartItems
-        };
+          cartItems: [
+            ...state.cartItems.slice(0, itemIndex),
+            newItem,
+            ...state.cartItems.slice(itemIndex + 1)
+          ]
+        }
       }
+
 
     default:
       return state;

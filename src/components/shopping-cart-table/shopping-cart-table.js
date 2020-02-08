@@ -12,12 +12,12 @@ const ShoppingCartTable = (props) => {
   } = props;
 
   const renderRaw = (item, index) => {
-    const { id, name, count, total } = item;
+    const { id, title, count, total } = item;
 
     return (
       <tr key={index}>
         <td>{index + 1}</td>
-        <td>{name}</td>
+        <td>{title}</td>
         <td>{count}</td>
         <td>${total}</td>
         <td>
